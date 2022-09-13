@@ -90,8 +90,6 @@ const YearFloatingFilter = (props: any) => {
 
     const api: IFloatingFilter = {
         onParentModelChanged(parentModel: any) {
-            // Niall - never called
-
             // When the filter is empty we will receive a null value here
             setFilterActive(parentModel != null);
         }
