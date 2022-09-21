@@ -29,16 +29,9 @@ const App: Component = () => {
     })
 
     const columnDefs = [
-        {field: 'athlete'},
-        {field: 'age', cellRenderer: MyRenderer},
-        {field: 'country'},
-        {field: 'year'},
-        {field: 'date'},
-        {field: 'sport'},
-        {field: 'gold'},
-        {field: 'silver'},
-        {field: 'bronze'},
-        {field: 'total'}
+        {field: 'athlete'}, {field: 'age', cellRenderer: MyRenderer},
+        {field: 'country'}, {field: 'year'}, {field: 'date'}, {field: 'sport'},
+        {field: 'gold'}, {field: 'silver'}, {field: 'bronze'}, {field: 'total'}
     ];
 
     const defaultColDef = {
@@ -49,15 +42,13 @@ const App: Component = () => {
     let gridRef: AgGridSolidRef;
 
     return (
-        <div style={{height: '100%', display: 'flex', "flex-direction": 'column'}}>
-            <div class="ag-theme-alpine" style={{"flex-grow": 1}}>
-                <AgGridSolid
-                    columnDefs={columnDefs}
-                    rowData={getRowData()}
-                    defaultColDef={defaultColDef}
-                    ref={gridRef!}
-                />
-            </div>
+        <div class="ag-theme-alpine" style={{height: '500px'}}>
+            <AgGridSolid
+                columnDefs={columnDefs}
+                rowData={getRowData()}
+                defaultColDef={defaultColDef}
+                ref={gridRef!}
+            />
         </div>
     );
 };
