@@ -1,5 +1,5 @@
 import {ICellEditorParams, ICellEditor, ModuleRegistry} from '@ag-grid-community/core';
-import type {Component} from 'solid-js';
+import {Component, onMount} from 'solid-js';
 import {createEffect, createSignal} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
@@ -41,7 +41,7 @@ const App: Component = () => {
 
     const [getRowData, setRowData] = createSignal<any[]>([]);
 
-    createEffect(() => {
+    onMount(() => {
         fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
             .then(resp => resp.json())
             .then(data => setRowData(data));

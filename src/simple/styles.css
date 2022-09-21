@@ -1,8 +1,8 @@
 .my-spinner {
     width: 40px;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: -10px;
+    left: -40px;
 }
 
 .my-renderer {

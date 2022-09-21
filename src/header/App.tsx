@@ -1,5 +1,5 @@
 import {ModuleRegistry} from '@ag-grid-community/core';
-import type {Component} from 'solid-js';
+import {Component, onMount} from 'solid-js';
 import {createEffect, createSignal, onCleanup} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
@@ -7,6 +7,7 @@ import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model
 import '@ag-grid-community/styles/ag-grid.css';
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import "./styles.css";
+import spinnerGif from './images/spinner.gif';
 
 ModuleRegistry.registerModules([ClientSideRowModelModule]);
 
@@ -18,7 +19,7 @@ const SortingHeader = (props:any) => {
         props.progressSort();
     };
 
-    createEffect(() => {
+    onMount(() => {
         const listener = () => {
             if (props.column.isSortAscending()) {
                 setSortState('ASC');
@@ -36,7 +37,7 @@ const SortingHeader = (props:any) => {
 
     return (
         <span class="my-header" onClick={onClick}>
-            <img src="https://d1yk6z6emsz7qy.cloudfront.net/static/images/loading.gif" class="my-spinner" />
+            <img src={spinnerGif} class="my-spinner" />
             {props.displayName} {sortState}
         </span>
     );
@@ -51,7 +52,7 @@ const MyGroupHeader = (props:any) => {
 
     const onExpandClicked = () => props.setExpanded(!columnGroup.isExpanded());
 
-    createEffect(() => {
+    onMount(() => {
         const listener = () => {
             setExpanded(columnGroup.isExpanded());
         };
@@ -68,7 +69,7 @@ const MyGroupHeader = (props:any) => {
 
      return (
          <span class="my-group-header">
-             <img src="https://d1yk6z6emsz7qy.cloudfront.net/static/images/loading.gif" class="my-spinner" />
+             <img src={spinnerGif} class="my-spinner" />
              {props.displayName}
              {expandable && showExpandJsx()}
          </span>
