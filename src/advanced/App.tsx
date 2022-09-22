@@ -12,20 +12,19 @@ import {MenuModule} from '@ag-grid-enterprise/menu';
 import {ExcelExportModule} from '@ag-grid-enterprise/excel-export';
 import {ClipboardModule} from '@ag-grid-enterprise/clipboard';
 
-import '@ag-grid-community/styles/ag-grid.css';
-import "@ag-grid-community/styles/ag-theme-alpine.css";
-import "./styles.css";
-import spinnerGif from './images/spinner.gif';
-
 ModuleRegistry.registerModules([ExcelExportModule, ClipboardModule, MenuModule, GridChartsModule, RangeSelectionModule, StatusBarModule, ClientSideRowModelModule, FiltersToolPanelModule, SetFilterModule]);
 
+import '@ag-grid-community/styles/ag-grid.css';
+import "@ag-grid-community/styles/ag-theme-alpine.css";
+import styles from "./style.module.css"
+import spinnerGif from './images/spinner.gif';
+
 const MyRenderer = (props: any) => {
-    return <span class="my-renderer">
-        <img src={spinnerGif} class="my-spinner"/>
-        <span class="my-renderer-value">{props.value}</span>
+    return <span class={styles["my-renderer"]}>
+        <img src={spinnerGif} class={styles["my-spinner"]}/>
+        <span class={styles["my-renderer-value"]}>{props.value}</span>
     </span>;
 }
-
 
 const App: Component = () => {
 
@@ -41,7 +40,6 @@ const App: Component = () => {
 
     // show chart of first rendering
     const onFirstDataRendered = ()=> {
-        console.log(gridRef.columnApi.getAllDisplayedColumnGroups());
         gridRef.api.createRangeChart({
             chartType: 'groupedColumn',
             cellRange: {
