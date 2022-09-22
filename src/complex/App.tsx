@@ -170,8 +170,6 @@ const FullApp: Component = () => {
                     rowGroupPanelShow='always'
                     rowData={getRowData()}
                     masterDetail={true}
-                    // isFullWidthRow: p => true,
-                    // fullWidthCellRenderer: JsEmptyComp,
                     animateRows={true}
                     ref={gridRef!}
                 />

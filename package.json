@@ -27,6 +27,9 @@
     "@ag-grid-enterprise/row-grouping": "~28.1.1",
     "@ag-grid-enterprise/set-filter": "~28.1.1",
     "@ag-grid-enterprise/status-bar": "~28.1.1",
+    "@ag-grid-enterprise/charts": "~28.1.1",
+    "@ag-grid-enterprise/clipboard": "~28.1.1",
+    "@ag-grid-enterprise/excel-export": "~28.1.1",
     "@solidjs/router": "^0.4.3",
     "solid-js": "1.5.3"
   },

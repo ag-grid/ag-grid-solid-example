@@ -1,14 +1,14 @@
 import {ICellEditorParams, ICellEditor, ModuleRegistry} from '@ag-grid-community/core';
-import type {Component} from 'solid-js';
+import {Component, onMount} from 'solid-js';
 import {createEffect, createSignal} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
 
+ModuleRegistry.registerModules([ClientSideRowModelModule]);
+
 import '@ag-grid-community/styles/ag-grid.css';
 import "@ag-grid-community/styles/ag-theme-alpine.css";
-import "./styles.css";
-
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
+import styles from "./style.module.css"
 
 export const MySolidEditor = (props: ICellEditorParams) => {
     let value = props.value;
@@ -24,13 +24,13 @@ export const MySolidEditor = (props: ICellEditorParams) => {
         value = event.target.value;
     };
 
-     createEffect(() => {
-         refInput.focus();
-     })
+    createEffect(() => {
+        refInput.focus();
+    })
 
 
     return (
-        <input type="number" class="my-editor"
+        <input type="number" class={styles["my-editor"]}
                ref={refInput}
                value={value}
                onChange={onValueChanged}
@@ -41,7 +41,7 @@ const App: Component = () => {
 
     const [getRowData, setRowData] = createSignal<any[]>([]);
 
-    createEffect(() => {
+    onMount(() => {
         fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
             .then(resp => resp.json())
             .then(data => setRowData(data));

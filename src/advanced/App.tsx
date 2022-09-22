@@ -1,36 +1,58 @@
 import {ModuleRegistry} from '@ag-grid-community/core';
-import type {Component} from 'solid-js';
+import {Component, onMount} from 'solid-js';
 import {createEffect, createSignal} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
+import {FiltersToolPanelModule} from '@ag-grid-enterprise/filter-tool-panel';
+import {SetFilterModule} from '@ag-grid-enterprise/set-filter';
+import {RangeSelectionModule} from '@ag-grid-enterprise/range-selection';
+import {StatusBarModule} from '@ag-grid-enterprise/status-bar';
+import {GridChartsModule} from '@ag-grid-enterprise/charts';
+import {MenuModule} from '@ag-grid-enterprise/menu';
+import {ExcelExportModule} from '@ag-grid-enterprise/excel-export';
+import {ClipboardModule} from '@ag-grid-enterprise/clipboard';
+
+ModuleRegistry.registerModules([ExcelExportModule, ClipboardModule, MenuModule, GridChartsModule, RangeSelectionModule, StatusBarModule, ClientSideRowModelModule, FiltersToolPanelModule, SetFilterModule]);
 
 import '@ag-grid-community/styles/ag-grid.css';
 import "@ag-grid-community/styles/ag-theme-alpine.css";
-import "./styles.css";
+import styles from "./style.module.css"
+import spinnerGif from './images/spinner.gif';
 
-ModuleRegistry.registerModules([ClientSideRowModelModule]);
-
-export const MyRenderer = (props: any) => {
-    return <span class="my-renderer">
-        <img src="https://d1yk6z6emsz7qy.cloudfront.net/static/images/loading.gif" class="my-spinner"/>
-        <span class="my-renderer-value">{props.value}</span>
+const MyRenderer = (props: any) => {
+    return <span class={styles["my-renderer"]}>
+        <img src={spinnerGif} class={styles["my-spinner"]}/>
+        <span class={styles["my-renderer-value"]}>{props.value}</span>
     </span>;
 }
-
 
 const App: Component = () => {
 
     const [getRowData, setRowData] = createSignal<any[]>([]);
 
-    createEffect(() => {
+    let gridRef: AgGridSolidRef;
+
+    onMount(() => {
         fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
             .then(resp => resp.json())
             .then(data => setRowData(data));
-    })
+    });
+
+    // show chart of first rendering
+    const onFirstDataRendered = ()=> {
+        gridRef.api.createRangeChart({
+            chartType: 'groupedColumn',
+            cellRange: {
+                rowStartIndex: 0,
+                rowEndIndex: 4,
+                columns: ['ag-Grid-AutoColumn', 'gold', 'silver'],
+            }
+        });
+    };
 
     const columnDefs = [
-        {field: 'sport', enableRowGroup: true, hide: true, rowGroup: true, cellRenderer: MyRenderer},
-        {field: 'country', enableRowGroup: true, rowGroup: true, hide: true},
+        {field: 'country', enableRowGroup: true, rowGroup: true, hide: true, cellRenderer: MyRenderer},
+        {field: 'sport', enableRowGroup: true, hide: true, rowGroup: true},
         {field: 'athlete', enableRowGroup: true, hide: true},
         {field: 'gold', aggFunc: 'sum'},
         {field: 'silver', aggFunc: 'sum'},
@@ -51,8 +73,6 @@ const App: Component = () => {
         width: 300
     }
 
-    let gridRef: AgGridSolidRef;
-
     return (
         <div style={{height: '100%', display: 'flex', "flex-direction": 'column'}}>
             <div class="ag-theme-alpine" style={{"flex-grow": 1}}>
@@ -63,8 +83,10 @@ const App: Component = () => {
                     autoGroupColumnDef={autoGroupColumnDef}
                     rowGroupPanelShow="always"
                     enableRangeSelection={true}
+                    enableCharts={true}
                     rowData={getRowData()}
                     rowSelection="multiple"
+                    onFirstDataRendered={onFirstDataRendered}
                     groupSelectsChildren={true}
                     suppressRowClickSelection={true}
                     ref={gridRef!}
