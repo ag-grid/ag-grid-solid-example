@@ -1,5 +1,5 @@
 import {ModuleRegistry} from '@ag-grid-community/core';
-import {Component, onMount} from 'solid-js';
+import {Component, createResource, onMount} from 'solid-js';
 import {createEffect, createSignal, onCleanup} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
@@ -76,16 +76,12 @@ const MyGroupHeader = (props:any) => {
     );
 };
 
+const fetchData = async () =>
+    (await fetch(`https://www.ag-grid.com/example-assets/olympic-winners.json`)).json();
+
 
 const App: Component = () => {
-
-    const [getRowData, setRowData] = createSignal<any[]>([]);
-
-    createEffect(() => {
-        fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-            .then(resp => resp.json())
-            .then(data => setRowData(data));
-    })
+    const [rowData] = createResource<any[]>(fetchData);
 
     const columnDefs = [
         {
@@ -121,7 +117,7 @@ const App: Component = () => {
                 <AgGridSolid
                     enableRangeSelection={true}
                     columnDefs={columnDefs}
-                    rowData={getRowData()}
+                    rowData={rowData()}
                     defaultColDef={defaultColDef}
                     ref={gridRef!}
                 />

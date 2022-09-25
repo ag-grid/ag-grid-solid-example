@@ -1,5 +1,5 @@
 import {ModuleRegistry} from '@ag-grid-community/core';
-import {Component, onMount} from 'solid-js';
+import {Component, createResource, onMount} from 'solid-js';
 import {createSignal} from "solid-js";
 import AgGridSolid, {AgGridSolidRef} from '@ag-grid-community/solid';
 import {ClientSideRowModelModule} from '@ag-grid-community/client-side-row-model';
@@ -18,19 +18,16 @@ const MyRenderer = (props: any) => {
     </span>;
 }
 
-const App: Component = () => {
+const fetchData = async () =>
+    (await fetch(`https://www.ag-grid.com/example-assets/master-detail-data.json`)).json();
 
-    const [getRowData, setRowData] = createSignal<any[]>([]);
+const App: Component = () => {
+    const [rowData] = createResource<any[]>(fetchData);
 
     let gridRef: AgGridSolidRef;
 
     onMount(() => {
-        fetch('https://www.ag-grid.com/example-assets/master-detail-data.json')
-            .then(resp => resp.json())
-            .then(data => {
-                setRowData(data);
-                setTimeout(() => gridRef!.api!.getDisplayedRowAtIndex(1)!.setExpanded(true), 100);
-            });
+        setTimeout(() => gridRef!.api!.getDisplayedRowAtIndex(1)!.setExpanded(true), 200);
     })
 
     const columnDefs = [
@@ -92,7 +89,7 @@ const App: Component = () => {
                     defaultColDef={defaultColDef}
                     masterDetail={true}
                     detailCellRendererParams={detailCellRendererParams}
-                    rowData={getRowData()}
+                    rowData={rowData()}
                     ref={gridRef!}
                 />
             </div>
