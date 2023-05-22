@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vite build",
     "build-prod": "npm run build",
     "serve": "vite preview"
   },
