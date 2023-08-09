@@ -10,6 +10,7 @@ import '@ag-grid-community/styles/ag-grid.css';
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import styles from "./style.module.css"
 import spinnerGif from './images/spinner.gif';
+import { FirstDataRenderedEvent } from '@ag-grid-community/core';
 
 const MyRenderer = (props: any) => {
     return <span class={styles["my-renderer"]}>
@@ -25,10 +26,6 @@ const App: Component = () => {
     const [rowData] = createResource<any[]>(fetchData);
 
     let gridRef: AgGridSolidRef;
-
-    onMount(() => {
-        setTimeout(() => gridRef!.api!.getDisplayedRowAtIndex(1)!.setExpanded(true), 200);
-    })
 
     const columnDefs = [
         { field: 'name', cellRenderer: 'agGroupCellRenderer' },
@@ -89,6 +86,9 @@ const App: Component = () => {
                     defaultColDef={defaultColDef}
                     masterDetail={true}
                     detailCellRendererParams={detailCellRendererParams}
+                    onFirstDataRendered={(params: FirstDataRenderedEvent) =>{
+                        params.api.getDisplayedRowAtIndex(1)!.setExpanded(true);
+                    }}
                     rowData={rowData()}
                     ref={gridRef!}
                 />
