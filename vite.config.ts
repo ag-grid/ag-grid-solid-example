@@ -5,5 +5,8 @@ export default defineConfig({
     plugins: [solidPlugin()],
     build: {
         target: 'esnext'
-    }
+    },
+    resolve: {
+        dedupe: ['solid-js']
+    },
 });
