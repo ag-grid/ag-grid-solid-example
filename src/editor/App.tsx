@@ -21,7 +21,7 @@ export const MySolidEditor = (props: ICellEditorParams) => {
     (props as any).ref(api);
 
     const onValueChanged = (event: any) => {
-        value = event.target.value;
+        value = Number(event.target.value);
     };
 
     createEffect(() => {
@@ -76,7 +76,6 @@ const App: Component = () => {
         <div style={{height: '100%', display: 'flex', "flex-direction": 'column'}}>
             <div class="ag-theme-alpine" style={{"flex-grow": 1}}>
                 <AgGridSolid
-                    enableRangeSelection={true}
                     columnDefs={columnDefs}
                     rowData={rowData()}
                     defaultColDef={defaultColDef}
