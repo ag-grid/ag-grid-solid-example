@@ -73,7 +73,6 @@ const App: Component = () => {
         <div style={{height: '100%', display: 'flex', "flex-direction": 'column'}}>
             <div class="ag-theme-alpine" style={{"flex-grow": 1}}>
                 <AgGridSolid
-                    animateRows={true}
                     columnDefs={columnDefs}
                     defaultColDef={defaultColDef}
                     autoGroupColumnDef={autoGroupColumnDef}
