@@ -258,7 +258,6 @@ const App: Component = () => {
                     ref={gridRef!}
                     sideBar={sideBar}
                     statusBar={statusBar}
-                    animateRows={true}
                     loadingOverlayComponent={MyLoadingOverlay}
                     noRowsOverlayComponent={MyNoRowsOverlay}
                     columnDefs={columnDefs}
