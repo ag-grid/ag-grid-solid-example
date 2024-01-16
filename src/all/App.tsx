@@ -9,6 +9,7 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 import '@ag-grid-community/styles/ag-grid.css';
 import "@ag-grid-community/styles/ag-theme-alpine.css";
 import styles from "./style.module.css"
+import loadingGif from "./loading.gif"
 
 const MyToolPanel = (props:any) => {
 
@@ -62,7 +63,7 @@ const MyStatusPanel = (props: any) => {
 const MyLoadingOverlay = () => {
     return (
         <div class={styles["my-loading-overlay"]}>
-            <img src="https://d1yk6z6emsz7qy.cloudfront.net/static/images/loading.gif" class={styles["my-all-spinner"]} />
+            <img src={loadingGif} class={styles["my-all-spinner"]} />
             Loading...
         </div>
     )
@@ -71,7 +72,7 @@ const MyLoadingOverlay = () => {
 const MyNoRowsOverlay = () => {
     return (
         <div class={styles["my-no-rows-overlay"]}>
-            <img src="https://d1yk6z6emsz7qy.cloudfront.net/static/images/loading.gif" class={styles["my-all-spinner"]} />
+            <img src={loadingGif} class={styles["my-all-spinner"]}/>
             No Rows
         </div>
     )
