@@ -220,8 +220,7 @@ const App: Component = () => {
     }
 
     const onCallFilter = () => {
-        // because Filter could be created Async, we use the callback mechanism in the method
-        gridRef.api.getFilterInstance('year', filterRef => filterRef.sampleToggleMethod());
+        gridRef.api.getColumnFilterInstance('year').then(filterRef => filterRef!.sampleToggleMethod());
     };
 
     const onCallToolPanel = () => {
